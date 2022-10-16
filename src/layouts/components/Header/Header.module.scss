@@ -8,11 +8,13 @@
 .topBar {
     background-color: #F0E9E9;
     height: 38px;
+
 }
 
 .topBar ul {
     display: flex;
     list-style-type: none;
+    margin-left: 183px;
 }
 
 .topBar li {
@@ -26,6 +28,7 @@
 .mainBar {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .title {

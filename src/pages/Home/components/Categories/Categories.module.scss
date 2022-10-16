@@ -1,0 +1,38 @@
+.categories {
+    width: 280px;
+    height: 628px;
+    background-color: #3D464D;
+    margin-top: 11px;
+}
+
+.headerTitle {
+    display: flex;
+    margin-top: 24px;
+    justify-content: center;
+}
+
+.listCategories {
+    margin-top: 20px;
+}
+
+.fieldType {
+    height: 52px;
+    color: #ffffff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.fieldType label {
+    margin-left: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.select {
+    background-color: #B59628;
+}

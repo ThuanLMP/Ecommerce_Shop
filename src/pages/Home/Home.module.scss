@@ -1,0 +1,108 @@
+.home {
+
+}
+
+.cardCate {
+    display: flex;
+    justify-content: center;
+}
+
+
+.images {
+    width: 862px;
+    height: 610px;
+    margin-left: 10px;
+    margin-top: 11px;
+}
+
+.benefits {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 19px;
+}
+
+.cardBenefit {
+    height: 94px;
+    width: 279px;
+    margin: 5px;
+    background-color: #F8F8F8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: solid 1px;
+    border-color: #DFD8D8;
+    
+}
+
+.iconShip{
+   margin-right: 7px;
+}
+.contentBenefit h2{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    font-weight: 700;
+    font-size: 27px;
+}
+
+.contentBenefit p {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.mainImg {
+    margin-bottom: 3px;
+}
+.mainImg img {
+    width: 862px;
+    height: 386px;
+}
+
+.subImg {
+    display: flex;
+    justify-content: center;
+}
+.subImg img {
+    width: 280px;
+    height: 224px;
+    margin: 5px;
+}
+
+.bestSellers {
+    position: relative;
+    width: 1151px;
+    height: 43px;
+    margin: 0 auto;
+}
+
+.bestSellers label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 25px;
+    margin-left: 28px;
+}
+
+.bestSellers button {
+    position: absolute;
+    right: 0;
+    border: solid 1px #F0E36A;
+    width: 131px;
+    height: 31px;
+    border-radius: 56px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.wrapProducts {
+    display: flex;
+    justify-content: center;
+}
+.cardProducts {
+    width: 1170px;
+    margin-bottom: 100px;
+    display: block;
+}

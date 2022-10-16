@@ -8,10 +8,17 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { useNavigate } from 'react-router-dom';
+import { updateStateDialog } from '../../../store/authSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Header() {
-
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const handleClickUser = () => {
+        const action = updateStateDialog(true);
+        dispatch(action)
+    }
 
     return (
         <div className={styles.header}>
@@ -26,7 +33,9 @@ export default function Header() {
             </div>
 
             <div className={styles.mainBar}>
-                <div className={styles.title}>
+                <div className={styles.title} onClick={() => {
+                    navigate('/home')
+                }}>
                     <h1>SHOP APP</h1>
                 </div>
                 <Box
@@ -63,15 +72,16 @@ export default function Header() {
                         inputProps={{ 'aria-label': 'search google maps' }}
                     />
 
-                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-                        <SearchIcon fontSize='large'/>
+                    <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon fontSize='large' />
                     </IconButton>
+
                 </Box>
                 <div className={styles.icons}>
                     <IconButton type="submit" sx={{ p: '10px' }} aria-label="cart">
                         <AddShoppingCartIcon fontSize='large' sx={{ color: '#323232' }} />
                     </IconButton>
-                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="user">
+                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="user" onClick={handleClickUser}>
                         <PersonOutlineIcon fontSize='large' sx={{ color: '#323232' }} />
                     </IconButton>
                 </div>
