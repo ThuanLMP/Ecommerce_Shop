@@ -36,10 +36,10 @@ export default function ForgotPassword() {
         dispatch(action3)
     }
 
-    const handleForgotPassword = async (email, handleClick,resetForm) => {
+    const handleForgotPassword = async (value, handleClick,resetForm) => {
         handleClick(true)
         try {
-            const response = await authApi.forgotPassword(email)
+            const response = await authApi.forgotPassword(value.email)
             if (response.status === 200) {
                 resetForm()
                 toast.success(response.data.message)

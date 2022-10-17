@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import routes from "../config/routes";
 import Error from "../pages/Error";
+import ProductDetails from "../pages/Product/ProductDetails";
 
 
 export default function Routing() {
@@ -14,6 +15,7 @@ export default function Routing() {
                     })
                 }
                 <Route path="*" element={<Error/>}/>
+                <Route path="/home/product" element={<ProductDetails/>}/>
             </Routes>
         </Router>
     )

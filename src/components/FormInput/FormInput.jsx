@@ -17,7 +17,8 @@ export default function FormInput({ listFeild, typeButton, handleClickClear, ini
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values, { resetForm }) => {
-            handleValues(values.email, handleLoading,resetForm)
+            
+            handleValues(values, handleLoading,resetForm)
         },
         validationSchema: validate
     })
