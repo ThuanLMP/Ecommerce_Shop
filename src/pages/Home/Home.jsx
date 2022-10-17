@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import productsApi from "../../api/productsApi";
 import Login from "../../components/Login";
 import Register from "../../components/Register/Register";
+import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
 
 export default function Home() {
 
@@ -111,9 +112,10 @@ export default function Home() {
                 </div>
 
             </div >
-            
+
             <Login />
             <Register />
+            <ForgotPassword />
         </HeaderOnly >
     )
 }

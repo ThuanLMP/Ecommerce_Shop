@@ -1,30 +1,78 @@
 import styles from './Register.module.scss';
 import Dialog from '@mui/material/Dialog';
 import FormInput from '../FormInput';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateStateDialog, updateStateDialogRegister } from '../../store/authSlice';
+import { RegisterSchema } from '../../utils/validate';
+import authApi from '../../api/authApi';
+import { toast } from 'react-toastify';
 
+const listFeild = [
+    {
+        name: 'username',
+        type: 'text',
+        label: 'User Name'
+    },
+    {
+        name: 'email',
+        type: 'email',
+        label: 'Email@gmail.com'
+    },
+    {
+        name: 'password',
+        type: 'password',
+        label: 'Password'
+    },
+    {
+        name: 'confirmPassword',
+        type: 'password',
+        label: 'Confirm Password'
+    }
+]
+
+const initialValues = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+}
 
 export default function Register() {
-    const listFeild = [
-        {
-            type: 'text',
-            label: 'User Name'
-        },
-        {
-            type: 'email',
-            label: 'Email@gmail.com'
-        },
-        {
-            type: 'password',
-            label: 'Password'
-        },
-        {
-            type: 'text',
-            label: 'Confirm Password'
-        }
-    ]
 
+    const dispatch = useDispatch()
     const state = useSelector(state => state.auth.stateDialogRegister)
+    const handleClickLogin = () => {
+        const action1 = updateStateDialogRegister(false)
+        dispatch(action1)
+        const action2 = updateStateDialog(true)
+        dispatch(action2)
+    }
+    const handleClickClear = () => {
+        const action3 = updateStateDialogRegister(false)
+        dispatch(action3)
+    }
+    const handleRegister = async (user, handleClick) => {
+        handleClick(true)
+        try {
+            const response = await authApi.register(user);
+            if (response.data.status === 201) {
+                const action1 = updateStateDialogRegister(false)
+                const action2 = updateStateDialog(true)
+                dispatch(action1)
+                dispatch(action2)
+                toast.success(response.data.message)
+            }
+            else {
+                toast.error('Register fail')
+            }
+        }
+        catch (error) {
+            console.log(error)
+            toast.error(error.response.data.message)
+        }
+        handleClick(false)
+    }
+
 
     return (
         <div>
@@ -43,8 +91,15 @@ export default function Register() {
 
                     <div className={styles.inputForm}>
                         <h1>Welcome to Shop App</h1>
-                        <FormInput listFeild={listFeild} typeButton={'Register'} />
-                        <div className={styles.featureMore1}>
+                        <FormInput
+                            listFeild={listFeild}
+                            typeButton={'Register'}
+                            handleClickClear={handleClickClear}
+                            initialValues={initialValues}
+                            validate={RegisterSchema}
+                            handleValues={handleRegister}
+                        />
+                        <div className={styles.featureMore1} onClick={handleClickLogin}>
                             <label>Login</label>
                         </div>
                         <div className={styles.featureMore2}>

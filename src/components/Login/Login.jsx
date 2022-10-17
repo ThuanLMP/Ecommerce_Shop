@@ -1,24 +1,36 @@
 
-import { TextField, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStateDialog, updateStateDialogRegister } from '../../store/authSlice';
+import { useRouteLoaderData } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import authApi from '../../api/authApi';
+import { accessToken, refreshToken } from '../../config/tokens';
+import { updateStateDialog, updateStateDialogForgotPassword, updateStateDialogRegister } from '../../store/authSlice';
+import { SigninSchema } from '../../utils/validate';
 import FormInput from '../FormInput';
 import styles from './Login.module.scss'
 
+const listFeild = [
+    {
+        name: 'email',
+        type: 'email',
+        label: 'Email@gmail.com'
+    },
+    {
+        name: 'password',
+        type: 'password',
+        label: 'Password'
+    }
+]
+
+const initialValues = {
+    email: '',
+    password: ''
+}
 
 export default function Login() {
-    const listFeild = [
-        {
-            type: 'email',
-            label: 'Email@gmail.com'
-        },
-        {
-            type: 'password',
-            label: 'Password'
-        }
-    ]
+    
+
     const dispatch = useDispatch()
     const state = useSelector(state => state.auth.stateDialog)
     const handleClickRegister = () => {
@@ -27,6 +39,49 @@ export default function Login() {
         const action2 = updateStateDialogRegister(true)
         dispatch(action2)
     }
+
+    const handleClickForgot = () => {
+        const action1 = updateStateDialog(false)
+        const action2 = updateStateDialogForgotPassword(true)
+        dispatch(action1)
+        dispatch(action2)
+    }
+    const handleClickClear = () => {
+        const action1 = updateStateDialog(false)
+        dispatch(action1)
+    }
+
+    const handleLogin = async (user, handleClick,resetForm) => {
+        handleClick(true)
+        try {
+            const response = await authApi.login(user);
+            if (response.data.status === 200) {
+                resetForm()
+                const dataResponse = response.data.data
+                localStorage.setItem(accessToken, dataResponse.tokens.access.token)
+                localStorage.setItem(refreshToken, dataResponse.tokens.refresh.token)
+
+                const userData = {
+                    username: dataResponse.user.username,
+                    email: dataResponse.user.email,
+                    role: dataResponse.user.role,
+                    avatar: dataResponse.user.avatar
+                }
+                localStorage.setItem('user', JSON.stringify(userData))
+                const action1 = updateStateDialog(false)
+                dispatch(action1)
+            } else {
+                toast.error('Login fail')
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response.data.message)
+        }
+
+        handleClick(false)
+    }
+
     return (
         <div>
             <Dialog
@@ -39,11 +94,18 @@ export default function Login() {
                 <div className={styles.loginForm} >
                     <div className={styles.inputForm}>
                         <h1>Welcome to Shop App</h1>
-                        <FormInput listFeild={listFeild} typeButton={'Login'} />
+                        <FormInput
+                            listFeild={listFeild}
+                            typeButton={'Login'}
+                            handleClickClear={handleClickClear}
+                            initialValues={initialValues}
+                            validate={SigninSchema}
+                            handleValues={handleLogin}
+                        />
                         <div className={styles.featureMore1} onClick={handleClickRegister}>
                             <label>Create An Accout</label>
                         </div>
-                        <div className={styles.featureMore2}>
+                        <div className={styles.featureMore2} onClick={handleClickForgot}>
                             <label>Forgot ?</label>
                         </div>
                     </div>

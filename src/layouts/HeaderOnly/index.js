@@ -1,9 +1,10 @@
 import Header from "../components/Header";
 
-function HeaderOnly({children}) {
-    return(
+function HeaderOnly({ children }) {
+    return (
         <div>
-            <Header/>
+            <Header />
+
             <div>
                 <div >{children}</div>
             </div>

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     stateDialog: false,
-    stateDialogRegister: false
+    stateDialogRegister: false,
+    stateDialogForgotPassword: false,
 }
 
 export const authSlice = createSlice({
@@ -16,12 +17,16 @@ export const authSlice = createSlice({
         updateStateDialogRegister: (state,action) => {
             state.stateDialogRegister = action.payload
         },
+        updateStateDialogForgotPassword: (state,action) => {
+            state.stateDialogForgotPassword = action.payload
+        }
     }
 })
 
 export const {
     updateStateDialog,
-    updateStateDialogRegister
+    updateStateDialogRegister,
+    updateStateDialogForgotPassword
 } = authSlice.actions
 
 export default authSlice.reducer
