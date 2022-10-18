@@ -1,3 +1,4 @@
+import Cart from "../pages/Cart";
 import Home from "../pages/Home";
 
 const routes = [
@@ -6,6 +7,11 @@ const routes = [
         component: <Home/>,
         roles: []
     },
+    {
+        path: '/home/cart',
+        component: <Cart/>,
+        roles: []
+    }
     
 ]
 
