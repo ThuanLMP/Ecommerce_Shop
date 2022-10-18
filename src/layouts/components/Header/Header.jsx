@@ -140,8 +140,8 @@ export default function Header() {
                         open={stateDialogUser}
                         BackdropProps={{
                             style: {
-                                height: '88.5%',
-                                marginTop: '11.5%'
+                                height: '89.5%',
+                                marginTop: '10.5%'
                             }
                         }}
                         PaperProps={{

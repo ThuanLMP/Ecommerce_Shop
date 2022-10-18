@@ -25,3 +25,7 @@ export const RegisterSchema = Yup.object().shape({
 export const ForgotPasswordSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email required !')
 })
+
+export const ReviewSchema = Yup.object().shape({
+    content: Yup.string().max(100, 'Content soo long')
+})

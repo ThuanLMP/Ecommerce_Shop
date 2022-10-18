@@ -17,11 +17,11 @@ export default function FormInput({ listFeild, typeButton, handleClickClear, ini
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: (values, { resetForm }) => {
-            
-            handleValues(values, handleLoading,resetForm)
+            handleValues(values, handleLoading, resetForm)
         },
         validationSchema: validate
     })
+    
     let messErr = ''
 
     if (typeButton === 'Login') {
@@ -80,7 +80,6 @@ export default function FormInput({ listFeild, typeButton, handleClickClear, ini
                 <span className={styles.error}>{messErr}</span>
                 <div className={styles.btn}>
                     <LoadingButton
-
                         loading={loading}
                         loadingPosition="end"
                         variant="contained"

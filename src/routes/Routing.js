@@ -15,7 +15,7 @@ export default function Routing() {
                     })
                 }
                 <Route path="*" element={<Error/>}/>
-                <Route path="/home/product" element={<ProductDetails/>}/>
+                <Route path="/home/products/:id" element={<ProductDetails/>}/>
             </Routes>
         </Router>
     )

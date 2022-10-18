@@ -19,6 +19,28 @@ const productsApi = {
             }
 
         )
+    },
+    getProductById: (id) => {
+        const url = `${urlApi}/v1/products/${id}`;
+        return axiosClient.get(
+            url
+        )
+    },
+    postReview: (dataReview) => {
+        const url = `${urlApi}/v1/products/${dataReview.productId}/reviews`;
+        return axiosClient.post(
+            url,
+            {
+                content: dataReview.content,
+                rating: dataReview.rating,
+                productId: dataReview.productId
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                }
+            }
+        )
     }
 }
 

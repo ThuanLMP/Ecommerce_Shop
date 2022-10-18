@@ -6,9 +6,7 @@ import CardProduct from "./components/CardProduct";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import productsApi from "../../api/productsApi";
-import Login from "../../components/Login";
-import Register from "../../components/Register/Register";
-import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
+
 
 export default function Home() {
 
@@ -98,7 +96,7 @@ export default function Home() {
                             products.length > 0 ? (
                                 products.map((value, index) => {
                                     return (
-                                        <CardProduct key={index} product={value} />
+                                        <CardProduct key={value.id} product={value} />
                                     )
                                 })
 
@@ -113,9 +111,6 @@ export default function Home() {
 
             </div >
 
-            <Login />
-            <Register />
-            <ForgotPassword />
         </HeaderOnly >
     )
 }
