@@ -1,0 +1,27 @@
+.titleQuantity {
+    color: #5A5A5A;
+    font-size: 17px;
+    font-weight: 700;
+    font-family: 'Roboto';
+}
+
+.quantity {
+    width: 162px;
+    height: 42px;
+    background-color: #E2E4E5;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 11px;
+}
+
+.quantity label {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: #959595
+}
+
+

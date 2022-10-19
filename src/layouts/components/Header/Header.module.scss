@@ -1,5 +1,5 @@
 .header {
-    width: 101%;
+    width: 100%;
     height: 161px;
     display: block;
     background-color: #FFD333;
@@ -40,6 +40,24 @@
 .icons {
     margin-top: 35px;
     margin-left: 10px;
+    position: relative;
+}
+.amountItems {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Roboto';
+    top: 0;
+    right: 0;
+    border-radius: 100%;
+    display: flex;
+}
+.amountItems label{
+   margin-left: 8px;
+   margin-top: 3px;
 }
 
 .menu {

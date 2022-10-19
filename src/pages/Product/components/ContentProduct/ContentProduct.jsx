@@ -2,22 +2,14 @@ import styles from './ContentProduct.module.scss';
 import { Divider, Rating } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import Quantity from '../../../../components/Quantity';
 
 
 export default function ContentProduct() {
-
     const product = useSelector(state => state.products.product)
-    const [quantity, setQuantity] = useState(1)
-    if(quantity<1){
-        setQuantity(1)
-    }
-    if(quantity>product.countInStock*1){
-        setQuantity(product.countInStock*1)
-    }
+    
+    
     return (
         <div className={styles.product}>
             <div className={styles.listImg}>
@@ -31,7 +23,6 @@ export default function ContentProduct() {
                     <img src={product.images[0].url} alt='product img' width="87" height="87" />
                     <img src={product.images[0].url} alt='product img' width="87" height="87" />
                     <img src={product.images[0].url} alt='product img' width="87" height="87" />
-
                 </div>
             </div>
 
@@ -93,42 +84,7 @@ export default function ContentProduct() {
                 <label className={styles.titleQuantity}>Quantity: </label>
 
                 <div className={styles.wrap}>
-                    <div className={styles.quantity}>
-                        <div onClick={() => {
-                            setQuantity(quantity => quantity + 1)
-                        }}>
-                            <AddIcon sx={{
-                                position: 'absolute',
-                                left: '20px',
-                                top: '10px',
-                                color: '#33A0FF',
-                                cursor: 'pointer',
-                                ":hover": {
-                                    color: 'black'
-                                }
-                            }} />
-                        </div>
-
-
-                        <label>{quantity}</label>
-
-                        <div onClick={() => {
-                            setQuantity(quantity => quantity - 1)
-                        }}>
-                            <RemoveIcon sx={{
-                                position: 'absolute',
-                                right: '20px',
-                                top: '10px',
-                                color: '#33A0FF',
-                                cursor: 'pointer',
-                                ":hover": {
-                                    color: 'black'
-                                }
-                            }} />
-                        </div>
-
-
-                    </div>
+                   <Quantity amount={1}/>
 
                     <div className={styles.btnAddToCart}>
                         <LoadingButton

@@ -5,8 +5,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Avatar, Dialog, Menu, MenuItem, Typography } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Avatar, Dialog, Typography } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { useNavigate } from 'react-router-dom';
 import { updateStateDialog } from '../../../store/authSlice';
@@ -15,18 +15,20 @@ import { useEffect, useState } from 'react';
 import { accessToken, refreshToken } from '../../../config/tokens';
 import authApi from '../../../api/authApi';
 import { toast } from 'react-toastify';
-import Login from '../../../components/Login';
+
 
 export default function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [stateDialogUser, setStateDialogUser] = useState(false)
     let user = JSON.parse(localStorage.getItem('user'))
+    const cart = useSelector(state => state.cart.cart)
+
     const stateDialog = useSelector(state => state.auth.stateDialog)
 
-    useEffect(()=>{
+    useEffect(() => {
         user = JSON.parse(localStorage.getItem('user'))
-    },[stateDialog])
+    }, [stateDialog])
 
     const handleClickAvatar = () => {
         setStateDialogUser(state => !state)
@@ -123,8 +125,19 @@ export default function Header() {
 
                 </Box>
                 <div className={styles.icons}>
-                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="cart">
-                        <AddShoppingCartIcon fontSize='large' sx={{ color: '#323232' }} />
+                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="cart" onClick={() => {
+                        navigate('/home/cart')
+                    }}>
+                        <ShoppingCartIcon fontSize='large' sx={{ color: '#323232' }} />
+                        {
+                            cart.itemArr.length > 0 ? (
+                                <div className={styles.amountItems}>
+                                    <label>{cart.itemArr.length}</label>
+                                </div>
+                            ) : (<></>)
+                        }
+
+
                     </IconButton>
                     <IconButton type="submit" sx={{ p: '10px' }} aria-label="user">
                         {
@@ -141,15 +154,15 @@ export default function Header() {
                         BackdropProps={{
                             style: {
                                 height: '89.5%',
-                                marginTop: '10.5%'
+                                marginTop: '10.3%'
                             }
                         }}
                         PaperProps={{
                             style: { borderRadius: 5 },
                             sx: {
                                 m: 0,
-                                bottom: 76,
-                                left: 420,
+                                bottom: 118,
+                                left: 415,
                             }
                         }}
                         onClose={handleClose}
@@ -169,7 +182,7 @@ export default function Header() {
 
             </div >
 
-           
+
         </div >
     )
 }
