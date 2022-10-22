@@ -4,13 +4,55 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TableItems from '../../components/TableItems';
 import { LoadingButton } from '@mui/lab';
 import { TextField } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { accessToken } from '../../config/tokens';
+import { updateStateDialog } from '../../store/authSlice';
+import cartApi from '../../api/cartApi';
 
+const formatDataCart = (rawDataCart, totalPrice) => {
+    const itemArr = rawDataCart.items.map((value) => {
+        return {
+            productId: value.productId,
+            quantity: value.quantity,
+            price: value.price,
+            total: value.total
+        }
+    })
+    let dataCart = {
+        cart: {
+            totalPrice: totalPrice,
+            userId: JSON.parse(localStorage.getItem('user')).id
+        },
+        itemArr: itemArr
+    }
+
+    return dataCart
+}
 
 export default function Cart() {
-    const cart = useSelector(state => state.cart.cart)
-    const totalPrice = cart.itemArr.reduce((total, value) => total + value.total, 0)
+    const dispatch = useDispatch()
     
+    const cart = useSelector(state => state.cart.cart)
+   
+    const totalPrice = cart.items.reduce((total, value) => total + value.total, 0)
+    const handleClickCheckout = () => {
+        
+        if (localStorage.getItem(accessToken)) {
+            const createCart = async () => {
+                try {
+                    const response = await cartApi.createCart(formatDataCart(cart, totalPrice))
+                    
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            createCart()
+        } else {
+            const action = updateStateDialog(true)
+            dispatch(action)
+        }
+    }
+
     return (
         <HeaderOnly>
             <div className={styles.wrapProduct}>
@@ -25,7 +67,7 @@ export default function Cart() {
                 </div>
                 <div className={styles.contentCart}>
                     <p className={styles.titleName}>Shopping Cart</p>
-                    <TableItems />
+                    <TableItems items={cart.items}/>
                     <div className={styles.wrap}>
                         <div className={styles.formCoupon}>
                             <TextField variant='filled' label='Coupon Code' sx={{
@@ -65,7 +107,7 @@ export default function Cart() {
                             </div>
                             <div className={styles.total}>
                                 <label>Total</label>
-                                <label className={styles.price}>${totalPrice+20}.00</label>
+                                <label className={styles.price}>${totalPrice + 20}.00</label>
                             </div>
 
                             <LoadingButton
@@ -73,6 +115,7 @@ export default function Cart() {
                                 loadingPosition='end'
                                 variant='contained'
                                 loading={false}
+                                onClick={handleClickCheckout}
                                 sx={{
                                     width: '487px',
                                     height: '69px',

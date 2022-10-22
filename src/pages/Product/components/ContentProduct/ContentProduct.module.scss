@@ -115,6 +115,7 @@
 .wrap {
     display: flex;
     align-items: center;
+    margin-top: 20px;
 }
 
 .btnAddToCart {
@@ -129,4 +130,41 @@
 
 .ratingReview {
     margin-top: 100px;
+}
+
+.colors {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.colors div {
+    width: 28px;
+    height: 28px;
+    background-color: #04941B;
+    margin-right: 10px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.titleQuantity {
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 700;
+    color: #5A5A5A;
+}
+
+.titleColor p {
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 700;
+    color: #5A5A5A;
+}
+.finalRating {
+    margin-top: 30px;
+}
+.finalRating p{
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 700;
+    color: #5A5A5A;
 }

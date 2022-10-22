@@ -7,40 +7,49 @@ const initialState = {
             totalPrice: 0,
             userId: 0,
         },
-        itemArr: [
+        items: [
             
         ]
-    }
+    },
+    carts: []
 }
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItem: (state, action) => {
-            state.cart.itemArr.push(action.payload)
+        updateCarts: (state,action) => {
+            state.carts = action.payload
         },
-        updateItemArr: (state,action) => {
-            state.cart.itemArr = action.payload
+        updateCart: (state,action) => {
+            state.cart = action.payload
+        },
+        addItem: (state, action) => {
+            state.cart.items.push(action.payload)
+        },
+        updateItems: (state,action) => {
+            state.cart.items = action.payload
         },
         addQuantity: (state,action) => {
-            state.cart.itemArr[action.payload].quantity = state.cart.itemArr[action.payload].quantity+1
+            state.cart.items[action.payload].quantity = state.cart.items[action.payload].quantity+1
         },
         reduceQuantity: (state,action) => {
-            state.cart.itemArr[action.payload].quantity = state.cart.itemArr[action.payload].quantity-1
+            state.cart.items[action.payload].quantity = state.cart.items[action.payload].quantity-1
         },
         updateTotalPrice: (state,action) => {
-            state.cart.itemArr[action.payload].total = state.cart.itemArr[action.payload].quantity * state.cart.itemArr[action.payload].price
+            state.cart.items[action.payload].total = state.cart.items[action.payload].quantity * state.cart.items[action.payload].price
         }
     }
 })
 
 export const {
     addItem,
-    updateItemArr,
+    updateItems,
     addQuantity,
     updateTotalPrice,
-    reduceQuantity
+    reduceQuantity,
+    updateCarts,
+    updateCart
 } = cartSlice.actions
 
 export default cartSlice.reducer

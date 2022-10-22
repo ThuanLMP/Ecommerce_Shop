@@ -1,9 +1,8 @@
 import { CardMedia, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import Quantity from "../Quantity";
-import styles from './TableItems.module.scss'
+import styles from './ListItems.module.scss'
 
 const listHeader = [
-    'Image', 'Product', 'Price', 'Quantity', 'Total'
+    'Image', 'Product', 'Total'
 ]
 
 export default function TableItems({ items }) {
@@ -13,22 +12,40 @@ export default function TableItems({ items }) {
                 <Table sx={{ minWidth: '700px', width: '100%' }} aria-label='simple table'>
                     <TableHead>
                         <TableRow sx={{ backgroundColor: '#C4C4C4' }}>
-                            {
-                                listHeader.map((value) => {
-                                    return (
-                                        <TableCell
-                                            align='left'
-                                            style={{
-                                                fontSize: '16px',
-                                                fontWeight: '700'
-                                            }}
-                                        >
-                                            {value}
-                                        </TableCell>
-                                    )
 
-                                })
-                            }
+                            <TableCell
+                                align='left'
+                                width='24%'
+                                style={{
+                                    fontSize: '16px',
+                                    fontWeight: '700'
+                                }}
+                            >
+                                Image
+                            </TableCell>
+
+                            <TableCell
+                                width='66%'
+                                align='left'
+                                style={{
+                                    fontSize: '16px',
+                                    fontWeight: '700'
+                                }}
+                            >
+                                Product
+                            </TableCell>
+
+                            <TableCell
+                                width='10%'
+                                align='left'
+                                style={{
+                                    fontSize: '16px',
+                                    fontWeight: '700'
+                                }}
+                            >
+                                Total
+                            </TableCell>
+
 
 
                         </TableRow>
@@ -38,21 +55,19 @@ export default function TableItems({ items }) {
                         {
                             items.map((value, index) => {
                                 return (
-                                    <TableRow>
+                                    <TableRow sx={{ backgroundColor: '#EBEAEA' }}>
                                         <TableCell>
                                             <CardMedia
                                                 component="img"
                                                 height="200"
                                                 style={{ borderRadius: 5 }}
-                                                image={value.itemCartInfo.images[0].url ?? ''}
+                                                image={value.url ?? ''}
                                                 alt="No Image"
                                                 sx={{
                                                     display: 'block',
                                                     maxWidth: '100px',
                                                     maxHeight: '100px',
-
                                                 }}
-                                                
                                             />
                                         </TableCell>
                                         <TableCell
@@ -60,28 +75,14 @@ export default function TableItems({ items }) {
                                                 fontSize: '24px',
                                                 fontWeight: '700'
                                             }}
+
                                         >
                                             {value.name}
-                                        </TableCell>
+                                            <div className={styles.quantity}>
+                                                <label>Qty: </label> {value.quantity}
+                                            </div>
 
-                                        <TableCell
-                                            style={{
-                                                fontSize: '24px',
-                                                fontWeight: '700'
-                                            }}
-                                        >
-                                            ${value.price}
                                         </TableCell>
-
-                                        <TableCell
-                                            style={{
-                                                fontSize: '24px',
-                                                fontWeight: '700'
-                                            }}
-                                        >
-                                            <Quantity amount={value.quantity} index={index} />
-                                        </TableCell>
-
                                         <TableCell
                                             style={{
                                                 fontSize: '24px',

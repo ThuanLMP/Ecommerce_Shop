@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteLoaderData } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authApi from '../../api/authApi';
+import cartApi from '../../api/cartApi';
 import { accessToken, refreshToken } from '../../config/tokens';
-import { updateStateDialog, updateStateDialogForgotPassword, updateStateDialogRegister } from '../../store/authSlice';
+import { updateStateDialog, updateStateDialogForgotPassword, updateStateDialogRegister, updateUser } from '../../store/authSlice';
+import { updateCart, updateCarts } from '../../store/cartSlice';
 import { SigninSchema } from '../../utils/validate';
 import FormInput from '../FormInput';
 import styles from './Login.module.scss'
@@ -29,10 +31,34 @@ const initialValues = {
 }
 
 export default function Login() {
-    
-
+    const carts = useSelector(state => state.cart.carts)
     const dispatch = useDispatch()
     const state = useSelector(state => state.auth.stateDialog)
+    const user = useSelector(state => state.auth.user)
+   
+    const getMyCart = async () => {
+        try {
+            const response = await cartApi.getMyCart()
+            if (response.data.status === 200) {
+                const action = updateCarts(response.data.data.carts)
+                dispatch(action)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const setupCart = async () => {
+        try {
+            const response = await cartApi.getMyCart()
+            if (response.data.status === 200) {
+                const action = updateCarts(response.data.data.carts)
+                dispatch(action)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const handleClickRegister = () => {
         const action1 = updateStateDialog(false)
         dispatch(action1)
@@ -51,26 +77,30 @@ export default function Login() {
         dispatch(action1)
     }
 
-    const handleLogin = async (user, handleClick,resetForm) => {
+    const handleLogin = async (user, handleClick, resetForm) => {
         handleClick(true)
         try {
-           
             const response = await authApi.login(user);
             if (response.data.status === 200) {
                 resetForm()
                 const dataResponse = response.data.data
                 localStorage.setItem(accessToken, dataResponse.tokens.access.token)
                 localStorage.setItem(refreshToken, dataResponse.tokens.refresh.token)
-
                 const userData = {
+                    id: dataResponse.user.id,
                     username: dataResponse.user.username,
                     email: dataResponse.user.email,
                     role: dataResponse.user.role,
                     avatar: dataResponse.user.avatar
                 }
                 localStorage.setItem('user', JSON.stringify(userData))
+                const action = updateUser(dataResponse.user)
+                dispatch(action)
                 const action1 = updateStateDialog(false)
                 dispatch(action1)
+                getMyCart()
+
+
             } else {
                 toast.error('Login fail')
             }
@@ -79,7 +109,6 @@ export default function Login() {
             console.log(error)
             toast.error(error.response.data.message)
         }
-
         handleClick(false)
     }
 

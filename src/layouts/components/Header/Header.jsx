@@ -130,9 +130,9 @@ export default function Header() {
                     }}>
                         <ShoppingCartIcon fontSize='large' sx={{ color: '#323232' }} />
                         {
-                            cart.itemArr.length > 0 ? (
+                            cart.items.length > 0 ? (
                                 <div className={styles.amountItems}>
-                                    <label>{cart.itemArr.length}</label>
+                                    <label>{cart.items.length}</label>
                                 </div>
                             ) : (<></>)
                         }

@@ -6,14 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import { updateProduct, updateReviews } from '../../../../store/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import productsApi from '../../../../api/productsApi';
-import { addItem, addQuantity, updateTotalPrice } from '../../../../store/cartSlice';
+import { accessToken } from '../../../../config/tokens';
+import { updateStateDialog } from '../../../../store/authSlice';
+import cartApi from '../../../../api/cartApi';
+import { updateCart } from '../../../../store/cartSlice';
+
 
 
 export default function CardProduct({ product }) {
-    
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart.cart)
+    const carts = useSelector(state => state.cart.carts)
+    const user = useSelector(state => state.auth.user)
+    const createCart = async (dataCart) => {
+        try {
+            const response = await cartApi.createCart(dataCart)
+            const action = updateCart(response.data.data)
+            dispatch(action)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getCartById = async (id) => {
+        try {
+            const response = await cartApi.getCartById(id)
+            const action = updateCart(response.data.data)
+            dispatch(action)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleClick = async () => {
         try {
             const response = await productsApi.getProductById(product.id)
@@ -26,42 +49,13 @@ export default function CardProduct({ product }) {
         }
         navigate(`/home/products/${product.id}`)
     }
-    const handleAddItems = () => {
-        let checkItem = false
-        if (cart.itemArr.length > 0) {
-            cart.itemArr.map((value, index) => {
-                if (value.productId === product.id) {
-                    checkItem = true
-                    const action = addQuantity(index)
-                    const action1 = updateTotalPrice(index)
-                    dispatch(action)
-                    dispatch(action1)
-                }
-            })
-            if (checkItem === false) {
-                const item = {
-                    productId: product.id,
-                    quantity: 1,
-                    price: product.price,
-                    total: product.price,
-                    name: product.name,
-                    img: product.images[0].url ?? ''
 
-                }
-                const action1 = addItem(item)
-                dispatch(action1)
-            }
-        } else {
-            const item = {
-                productId: product.id,
-                quantity: 1,
-                price: product.price,
-                total: product.price,
-                name: product.name,
-                img: product.images[0].url ?? ''
-            }
-            const action = addItem(item)
+    const handleAddItems = () => {
+        if (!localStorage.getItem(accessToken)) {
+            const action = updateStateDialog(true)
             dispatch(action)
+        } else {
+            
         }
 
     }
@@ -73,7 +67,7 @@ export default function CardProduct({ product }) {
             <div className={styles.contentProduct}>
                 <label className={styles.nameProduct}>{product.name}</label>
                 <label className={styles.idProduct}>ID: {product.id}</label>
-                <Rating name="read-only" value={+product.rating} readOnly size='small' />
+                <Rating name="half-rating-read" precision={0.5} value={+product.rating} readOnly size='small' />
                 <label className={styles.saleProduct}>50% Off</label>
                 <label className={styles.priceProduct}> $ {product.price}</label>
                 <IconButton

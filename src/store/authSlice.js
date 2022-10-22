@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
+    user: {},
     stateDialog: false,
     stateDialogRegister: false,
     stateDialogForgotPassword: false,
@@ -11,6 +12,9 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        updateUser: (state,action)=> {
+            state.user = action.payload
+        },
         updateStateDialog: (state,action) => {
             state.stateDialog = action.payload
         },
@@ -26,7 +30,8 @@ export const authSlice = createSlice({
 export const {
     updateStateDialog,
     updateStateDialogRegister,
-    updateStateDialogForgotPassword
+    updateStateDialogForgotPassword,
+    updateUser
 } = authSlice.actions
 
 export default authSlice.reducer

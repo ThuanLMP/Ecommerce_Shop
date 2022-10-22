@@ -25,6 +25,21 @@ const cartApi = {
             }
         )
     },
+    createCart: (dataCart) => {
+        const url = `${urlApi}/v1/cart`;
+        return axiosClient.post(
+            url,
+            {
+                cart: dataCart.cart,
+                itemArr: dataCart.itemArr
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                }
+            }
+        )
+    }
 
 
 }
