@@ -1,12 +1,23 @@
 import { CardMedia, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Quantity from "../Quantity";
 import styles from './TableItems.module.scss'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
+import { useState } from "react";
 const listHeader = [
-    'Image', 'Product', 'Price', 'Quantity', 'Total'
+    'Image', 'Product', 'Price', 'Quantity', 'Total', 'Action'
 ]
 
-export default function TableItems({ items }) {
+export default function TableItems({ items, updateItem, handleDelete }) {
+    const [value, setValue] = useState({})
+    const [stateModal, setStateModal] = useState(false)
+
+    const handleClickDelete = (value) => {
+        setStateModal(true)
+        setValue(value)
+    }
+
+
     return (
         <div className={styles.table}>
             <TableContainer component={Paper} >
@@ -52,7 +63,7 @@ export default function TableItems({ items }) {
                                                     maxHeight: '100px',
 
                                                 }}
-                                                
+
                                             />
                                         </TableCell>
                                         <TableCell
@@ -61,7 +72,7 @@ export default function TableItems({ items }) {
                                                 fontWeight: '700'
                                             }}
                                         >
-                                            {value.name}
+                                            {value.itemCartInfo.name}
                                         </TableCell>
 
                                         <TableCell
@@ -79,7 +90,7 @@ export default function TableItems({ items }) {
                                                 fontWeight: '700'
                                             }}
                                         >
-                                            <Quantity amount={value.quantity} index={index} />
+                                            <Quantity amount={value.quantity} product={value} index={index} handleUpdate={updateItem} type={'cart'} />
                                         </TableCell>
 
                                         <TableCell
@@ -90,16 +101,31 @@ export default function TableItems({ items }) {
                                         >
                                             ${value.total}
                                         </TableCell>
+                                        <TableCell
+                                            style={{
+                                                fontSize: '24px',
+                                                fontWeight: '700'
+                                            }}
+                                            onClick={() => handleClickDelete(value)}
+                                        >
+                                            <DeleteIcon
+                                                fontSize="large"
+                                                sx={{
+                                                    marginLeft: '10px',
+                                                    marginTop: '5px',
+                                                    color: 'red',
+                                                    cursor: 'pointer'
+                                                }}
+                                            />
+                                        </TableCell>
                                     </TableRow>
                                 )
                             })
                         }
-
-
-
                     </TableBody>
                 </Table>
             </TableContainer>
+            <ModalConfirm stateModal={stateModal} setStateModal={setStateModal} value={value} handleClickDelete={handleDelete} />
         </div>
 
     )

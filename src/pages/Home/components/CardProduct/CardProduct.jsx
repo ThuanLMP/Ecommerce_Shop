@@ -9,34 +9,38 @@ import productsApi from '../../../../api/productsApi';
 import { accessToken } from '../../../../config/tokens';
 import { updateStateDialog } from '../../../../store/authSlice';
 import cartApi from '../../../../api/cartApi';
-import { updateCart } from '../../../../store/cartSlice';
+import { updateCart, updateStateAddItem } from '../../../../store/cartSlice';
+import { toast } from 'react-toastify';
 
+
+const formatDataCart = (product) => {
+    const itemArr = [
+        {
+            productId: product.id,
+            quantity: 1,
+            price: product.price,
+            total: product.price
+        }
+    ]
+
+    let dataCart = {
+        cart: {
+            totalPrice: product.price,
+            userId: JSON.parse(localStorage.getItem('user')).id
+        },
+        itemArr: itemArr
+    }
+
+    return dataCart
+}
 
 
 export default function CardProduct({ product }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const carts = useSelector(state => state.cart.carts)
-    const user = useSelector(state => state.auth.user)
-    const createCart = async (dataCart) => {
-        try {
-            const response = await cartApi.createCart(dataCart)
-            const action = updateCart(response.data.data)
-            dispatch(action)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const getCartById = async (id) => {
-        try {
-            const response = await cartApi.getCartById(id)
-            const action = updateCart(response.data.data)
-            dispatch(action)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
+    const cart = useSelector(state => state.cart.cart)
+    const stateAddItem = useSelector(state => state.cart.stateAddItem)
     const handleClick = async () => {
         try {
             const response = await productsApi.getProductById(product.id)
@@ -55,7 +59,48 @@ export default function CardProduct({ product }) {
             const action = updateStateDialog(true)
             dispatch(action)
         } else {
-            
+            if (carts.total === 0) {
+                const createCart = async () => {
+                    try {
+                        const response = await cartApi.createCart(formatDataCart(product))
+                        if (response.data.status === 201) {
+                            const action = updateCart(response.data.data)
+                            dispatch(action)
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+                createCart()
+            } else {
+                const result = cart.items.filter((value) => {
+                    return value.itemCartInfo.id === product.id
+                })
+                if (result.length === 0) {
+                    const dataItem = {
+                        "cartId": cart.cart.id,
+                        "productId": product.id,
+                        "quantity": 1,
+                        "price": product.price,
+                        "total": product.price
+                    }
+                    const addItem = async () => {
+                        try {
+                            const response = await cartApi.addItem(dataItem)
+                            if (response.status === 200) {
+                                const action = updateStateAddItem(!stateAddItem)
+                                dispatch(action)
+                                toast.success('Add item success')
+                            }
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }
+                    addItem()
+                }else{
+                    toast.error('Item exist')
+                }
+            }
         }
 
     }

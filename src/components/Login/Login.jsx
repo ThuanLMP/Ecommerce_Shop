@@ -36,29 +36,7 @@ export default function Login() {
     const state = useSelector(state => state.auth.stateDialog)
     const user = useSelector(state => state.auth.user)
    
-    const getMyCart = async () => {
-        try {
-            const response = await cartApi.getMyCart()
-            if (response.data.status === 200) {
-                const action = updateCarts(response.data.data.carts)
-                dispatch(action)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const setupCart = async () => {
-        try {
-            const response = await cartApi.getMyCart()
-            if (response.data.status === 200) {
-                const action = updateCarts(response.data.data.carts)
-                dispatch(action)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
     const handleClickRegister = () => {
         const action1 = updateStateDialog(false)
         dispatch(action1)
@@ -98,7 +76,7 @@ export default function Login() {
                 dispatch(action)
                 const action1 = updateStateDialog(false)
                 dispatch(action1)
-                getMyCart()
+             
 
 
             } else {

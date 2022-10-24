@@ -3,27 +3,38 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addQuantity, reduceQuantity, updateTotalPrice } from '../../store/cartSlice';
+import { updateQuantity } from '../../store/cartSlice';
 
 
-export default function Quantity({ amount, index }) {
+
+export default function Quantity({ amount, product, index, handleUpdate, type }) {
     const dispatch = useDispatch()
-    const product = useSelector(state => state.products.product)
+    const [quantity, setQuantity] = useState(amount)
+    const handleClickReduce = async () => {
+        if (type === 'cart')
+            await handleUpdate(quantity - 1, (quantity - 1) * product.price, product.id, 'reduce', index)
+        setQuantity(quantity => quantity - 1)
+        const action = updateQuantity(quantity - 1)
+        dispatch(action)
+    }
 
+    const handleClickAdd = async () => {
+        if (type === 'cart')
+            await handleUpdate(quantity + 1, (quantity + 1) * product.price, product.id, 'add', index)
+        setQuantity(quantity => quantity + 1)
+        const action = updateQuantity(quantity + 1)
+        dispatch(action)
+
+    }
 
     return (
         <div className={styles.quantity}>
 
             <div onClick={() => {
-                if (amount === 1) {
+                if (quantity > 1) {
+                    handleClickReduce()
+                }
 
-                }
-                else {
-                    const action = reduceQuantity(index)
-                    const action1 = updateTotalPrice(index)
-                    dispatch(action)
-                    dispatch(action1)
-                }
 
             }}>
                 <RemoveIcon sx={{
@@ -35,22 +46,14 @@ export default function Quantity({ amount, index }) {
                     ":hover": {
                         color: 'black'
                     }
-                }} />
+                }}
+                />
             </div>
 
-            <label>{amount}</label>
+            <label>{quantity}</label>
 
             <div onClick={() => {
-                if (amount === product.countInStock * 1) {
-
-                }
-                else {
-                    const action = addQuantity(index)
-                    const action1 = updateTotalPrice(index)
-                    dispatch(action)
-                    dispatch(action1)
-                }
-
+                handleClickAdd()
             }}>
                 <AddIcon sx={{
                     position: 'absolute',

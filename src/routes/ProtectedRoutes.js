@@ -5,8 +5,6 @@ const ProtectedRoutes = ({ children, roles }) => {
 
     // Kiểm tra roles của đường dẫn có khớp với roles của tài khoản không
     const checkRoles = (roles1, roles2) => {
-        console.log(roles1)
-        console.log(roles2)
         if (roles1 === 'admin') {
             return true
         }
@@ -20,10 +18,8 @@ const ProtectedRoutes = ({ children, roles }) => {
     }
 
     if (!user) {
-        console.log('haha')
         return <Navigate to="/home" replace />
     } else {
-        console.log('hihi')
         if (!checkRoles(user.role, roles)) {
             return <Navigate to="/home" replace />
         }

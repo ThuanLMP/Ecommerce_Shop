@@ -5,51 +5,53 @@ import TableItems from '../../components/TableItems';
 import { LoadingButton } from '@mui/lab';
 import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { accessToken } from '../../config/tokens';
-import { updateStateDialog } from '../../store/authSlice';
 import cartApi from '../../api/cartApi';
+import { addQuantity, reduceQuantity, updateStateDeleteItem, updateTotalPrice } from '../../store/cartSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const formatDataCart = (rawDataCart, totalPrice) => {
-    const itemArr = rawDataCart.items.map((value) => {
-        return {
-            productId: value.productId,
-            quantity: value.quantity,
-            price: value.price,
-            total: value.total
-        }
-    })
-    let dataCart = {
-        cart: {
-            totalPrice: totalPrice,
-            userId: JSON.parse(localStorage.getItem('user')).id
-        },
-        itemArr: itemArr
-    }
-
-    return dataCart
-}
 
 export default function Cart() {
     const dispatch = useDispatch()
-    
+    const navigate = useNavigate()
     const cart = useSelector(state => state.cart.cart)
-   
+    const stateDeleteItem = useSelector(state=> state.cart.stateDeleteItem)
     const totalPrice = cart.items.reduce((total, value) => total + value.total, 0)
-    const handleClickCheckout = () => {
-        
-        if (localStorage.getItem(accessToken)) {
-            const createCart = async () => {
-                try {
-                    const response = await cartApi.createCart(formatDataCart(cart, totalPrice))
-                    
-                } catch (error) {
-                    console.log(error)
+
+    const updateItem = async (value, total, id, type, index) => {
+        try {
+            const response = await cartApi.updateItem(value, total, id)
+            if (response.data.status === 200) {
+                if (type === 'add') {
+                    const action = addQuantity(index)
+                    dispatch(action)
                 }
+                else {
+                    const action = reduceQuantity(index)
+                    dispatch(action)
+                }
+                const action1 = updateTotalPrice(index)
+                dispatch(action1)
             }
-            createCart()
-        } else {
-            const action = updateStateDialog(true)
-            dispatch(action)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const handleClickCheckout = () => {
+        navigate('/home/checkout')
+    }
+    const handleDelete = async (id) => {
+        try {
+            const response = await cartApi.deleteItem(id)
+            if(response.status===200){
+                const action = updateStateDeleteItem(!stateDeleteItem)
+                dispatch(action)
+                toast.success('Delete item success')
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error('Delete fail')
         }
     }
 
@@ -67,7 +69,7 @@ export default function Cart() {
                 </div>
                 <div className={styles.contentCart}>
                     <p className={styles.titleName}>Shopping Cart</p>
-                    <TableItems items={cart.items}/>
+                    <TableItems items={cart.items} updateItem={updateItem} handleDelete = {handleDelete} />
                     <div className={styles.wrap}>
                         <div className={styles.formCoupon}>
                             <TextField variant='filled' label='Coupon Code' sx={{

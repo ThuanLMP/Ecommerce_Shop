@@ -6,6 +6,7 @@ const listHeader = [
 ]
 
 export default function TableItems({ items }) {
+    
     return (
         <div className={styles.table}>
             <TableContainer component={Paper} >
@@ -61,7 +62,7 @@ export default function TableItems({ items }) {
                                                 component="img"
                                                 height="200"
                                                 style={{ borderRadius: 5 }}
-                                                image={value.url ?? ''}
+                                                image={value.itemCartInfo.images[0].url ?? ''}
                                                 alt="No Image"
                                                 sx={{
                                                     display: 'block',
@@ -77,7 +78,7 @@ export default function TableItems({ items }) {
                                             }}
 
                                         >
-                                            {value.name}
+                                            {value.itemCartInfo.name}
                                             <div className={styles.quantity}>
                                                 <label>Qty: </label> {value.quantity}
                                             </div>
