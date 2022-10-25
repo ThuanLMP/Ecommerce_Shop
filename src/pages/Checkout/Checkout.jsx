@@ -10,11 +10,12 @@ import FormControl from '@mui/material/FormControl';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import ShippingInfo from './component/ShippingInfor/ShippingInfo';
-import { updateItemArr, updateMethodPayment } from '../../store/orderSlice';
+import { setUserId, updateItemArr, updateMethodPayment, updateTotalPrice } from '../../store/orderSlice';
 import { useEffect, useState } from 'react';
 import orderApi from '../../api/orderApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { b64DecodeUnicode } from '../../utils/ultils';
 
 const methodPayment = ['Cash on delivery', 'Check payment', 'Paypal', 'Master Card']
 const formatDataOrder = (items) => {
@@ -26,34 +27,47 @@ const formatDataOrder = (items) => {
             total: value.quantity * value.price
         }
     })
-   return result
+    return result
 }
 export default function Checkout() {
     const cart = useSelector(state => state.cart.cart)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     let totalPrice = 0;
-    cart.items.map((value) => {
-        return totalPrice = totalPrice + value.total
-    })
+
+    const setTotalPrice = () => {
+        cart.items.map((value) => {
+            return totalPrice = totalPrice + value.total
+        })
+        const action = updateTotalPrice(totalPrice)
+        dispatch(action)
+    }
+    setTotalPrice()
+    const setUser = () => {
+        const action = setUserId(JSON.parse(b64DecodeUnicode(localStorage.getItem('user'))).id)
+        dispatch(action)
+    }
+    setUser()
     const dataOrder = useSelector(state => state.order.dataOrder)
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+
     const handleClickMethodPay = (value) => {
         const action = updateMethodPayment(value)
         dispatch(action)
     }
-    useEffect(()=>{
+
+    useEffect(() => {
         const action = updateItemArr(formatDataOrder(cart.items))
         dispatch(action)
-    },[cart])
+    }, [cart])
 
     const handleCheckout = async () => {
         setLoading(true)
         try {
             const response = await orderApi.createOrder(dataOrder)
-            if(response.status===200){
+            if (response.status === 200) {
                 toast.success('New order created')
-            }else{
+            } else {
                 toast.error('Fail')
             }
         } catch (error) {

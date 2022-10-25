@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateOrder } from '../../../../store/orderSlice'
+import { b64DecodeUnicode } from '../../../../utils/ultils'
 import { shippingInfoSchema } from '../../../../utils/validate'
 import styles from './ShippingInfo.module.scss'
 
@@ -45,7 +46,7 @@ export default function ShippingInfo() {
                         <label>Phone Number</label>
                         <p>{dataOrder.order.contact}</p>
                         <label>Email Address</label>
-                        <p>{JSON.parse(localStorage.getItem('user')).email}</p>
+                        <p>{JSON.parse(b64DecodeUnicode(localStorage.getItem('user'))).email}</p>
                         <div
                             onClick={handleClickEdit}
                         >Edit address</div>
@@ -56,7 +57,6 @@ export default function ShippingInfo() {
                     <div className={styles.formEdit}>
                         <form onSubmit={formik.handleSubmit}>
                             <div>
-
                                 <TextField
                                     id="address"
                                     label="Address"

@@ -1,4 +1,5 @@
 import { urlApi } from "../config/api"
+import { b64DecodeUnicode } from "../utils/ultils";
 import axiosClient from "./axiosClient";
 
 
@@ -11,10 +12,21 @@ const orderApi = {
             ,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
     },
+    getMyOrders: () => {
+        const url = `${urlApi}/v1/orders/my-orders`;
+        return axiosClient.get(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    }
 }
 export default orderApi

@@ -17,6 +17,7 @@ import authApi from '../../../api/authApi';
 import { toast } from 'react-toastify';
 import cartApi from '../../../api/cartApi';
 import { updateCart, updateCarts } from '../../../store/cartSlice';
+import { b64DecodeUnicode } from '../../../utils/ultils';
 
 
 
@@ -25,16 +26,13 @@ export default function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [stateDialogUser, setStateDialogUser] = useState(false)
-    let user = JSON.parse(localStorage.getItem('user'))
     const cart = useSelector(state => state.cart.cart)
     const stateDialog = useSelector(state => state.auth.stateDialog)
     const carts = useSelector(state => state.cart.carts)
     const stateAddItem = useSelector(state => state.cart.stateAddItem)
     const stateDeleteItem = useSelector(state => state.cart.stateDeleteItem)
 
-    useEffect(() => {
-        user = JSON.parse(localStorage.getItem('user'))
-    }, [stateDialog])
+   
 
     useEffect(() => {
         if (localStorage.getItem(accessToken)) {
@@ -92,8 +90,8 @@ export default function Header() {
 
     const handleClickLogout = async () => {
         try {
-            const refreshTk = localStorage.getItem(refreshToken)
-            const userData = JSON.parse(localStorage.getItem('user'))
+            const refreshTk = b64DecodeUnicode(localStorage.getItem(refreshToken))
+            const userData = JSON.parse(b64DecodeUnicode(localStorage.getItem('user')))
             const dataLogout = {
                 refreshToken: refreshTk,
                 deviceId: `deviceId-${userData.email}`
@@ -103,6 +101,7 @@ export default function Header() {
                 localStorage.removeItem(refreshToken)
                 localStorage.removeItem(accessToken)
                 localStorage.removeItem('user')
+                const action = updateCart()
                 navigate('../../home')
                 toast.success(response.data.message)
             }
@@ -188,12 +187,13 @@ export default function Header() {
 
 
                     </IconButton>
+
                     <IconButton type="submit" sx={{ p: '10px' }} aria-label="user">
                         {
-                            user === null ?
+                            localStorage.getItem('user') === null ?
                                 (<PersonOutlineIcon fontSize='large' sx={{ color: '#323232' }} onClick={handleClickUser} />)
                                 :
-                                (<Avatar alt="Avatar" src={user.avatar} onClick={handleClickAvatar} />)
+                                (<Avatar alt="Avatar" src={JSON.parse(b64DecodeUnicode(localStorage.getItem('user'))).avatar} onClick={handleClickAvatar} />)
                         }
                     </IconButton>
                 </div>

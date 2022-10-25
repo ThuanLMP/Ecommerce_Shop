@@ -11,6 +11,7 @@ import { addReview } from '../../../../store/productsSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { updateStateDialog } from '../../../../store/authSlice';
+import { b64DecodeUnicode } from '../../../../utils/ultils';
 
 export default function WriteReview() {
     const { id } = useParams()
@@ -19,7 +20,7 @@ export default function WriteReview() {
     const [loading, setLoading] = useState(false)
     const [valueStar, setValueStar] = useState(5)
     const handleValues = async (values,resetForm) => {
-        if (localStorage.getItem('ACCESS_TOKEN_SHOP')) {
+        if (b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))) {
             setLoading(true)
             const dataReview = {
                 content: values.content,

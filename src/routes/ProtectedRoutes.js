@@ -1,7 +1,11 @@
 import { Navigate } from "react-router-dom";
+import { b64DecodeUnicode } from "../utils/ultils";
 
 const ProtectedRoutes = ({ children, roles }) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    let user = false
+    if (localStorage.getItem('user')) {
+        user = JSON.parse(b64DecodeUnicode(localStorage.getItem('user')))
+    }
 
     // Kiểm tra roles của đường dẫn có khớp với roles của tài khoản không
     const checkRoles = (roles1, roles2) => {

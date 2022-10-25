@@ -1,4 +1,5 @@
 import { urlApi } from "../config/api"
+import { b64DecodeUnicode } from "../utils/ultils";
 import axiosClient from "./axiosClient";
 
 
@@ -9,7 +10,7 @@ const cartApi = {
             url,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
@@ -20,7 +21,7 @@ const cartApi = {
             url,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
@@ -35,7 +36,7 @@ const cartApi = {
             },
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
@@ -51,7 +52,7 @@ const cartApi = {
             ,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
@@ -70,7 +71,7 @@ const cartApi = {
             ,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )
@@ -81,7 +82,7 @@ const cartApi = {
             url,
             {
                 headers: {
-                    'Authorization': `bearer ${localStorage.getItem('ACCESS_TOKEN_SHOP')}`
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }
         )

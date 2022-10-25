@@ -1,6 +1,15 @@
 
-export default function OrderHistory() {
+import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import TableList from '../TableList'
+import styles from './OrderHistory.module.scss'
+const listHeader = [
+    'Order', 'Date', 'Status', 'Total'
+]
+export default function OrderHistory({listHeader,items}) {
     return (
-        <h1>OrderHistory</h1>
+        <div className={styles.wrapOrderHistory}>
+            <h2 style={{marginLeft: '30px'}}>Order History</h2>
+            <TableList listHeader={listHeader} items={items}/>
+        </div>
     )
 }

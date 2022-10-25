@@ -8,6 +8,7 @@ import cartApi from '../../api/cartApi';
 import { accessToken, refreshToken } from '../../config/tokens';
 import { updateStateDialog, updateStateDialogForgotPassword, updateStateDialogRegister, updateUser } from '../../store/authSlice';
 import { updateCart, updateCarts } from '../../store/cartSlice';
+import { b64EncodeUnicode } from '../../utils/ultils';
 import { SigninSchema } from '../../utils/validate';
 import FormInput from '../FormInput';
 import styles from './Login.module.scss'
@@ -62,8 +63,8 @@ export default function Login() {
             if (response.data.status === 200) {
                 resetForm()
                 const dataResponse = response.data.data
-                localStorage.setItem(accessToken, dataResponse.tokens.access.token)
-                localStorage.setItem(refreshToken, dataResponse.tokens.refresh.token)
+                localStorage.setItem(accessToken, b64EncodeUnicode( dataResponse.tokens.access.token))
+                localStorage.setItem(refreshToken, b64EncodeUnicode( dataResponse.tokens.refresh.token))
                 const userData = {
                     id: dataResponse.user.id,
                     username: dataResponse.user.username,
@@ -71,7 +72,7 @@ export default function Login() {
                     role: dataResponse.user.role,
                     avatar: dataResponse.user.avatar
                 }
-                localStorage.setItem('user', JSON.stringify(userData))
+                localStorage.setItem('user', b64EncodeUnicode( JSON.stringify(userData)))
                 const action = updateUser(dataResponse.user)
                 dispatch(action)
                 const action1 = updateStateDialog(false)

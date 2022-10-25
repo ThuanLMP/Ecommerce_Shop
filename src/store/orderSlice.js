@@ -8,7 +8,7 @@ const initialState = {
             address: 'Đại học FPT',
             contact: '0388684080',
             totalPrice: 0,
-            userId: JSON.parse(localStorage.getItem('user')).id
+            userId: 0
         },
         itemArr: []
     }
@@ -26,6 +26,12 @@ export const orderSlice = createSlice({
         },
         updateItemArr: (state,action) => {
             state.dataOrder.itemArr = action.payload
+        },
+        updateTotalPrice: (state,action) => {
+            state.dataOrder.order.totalPrice = action.payload
+        },
+        setUserId: (state,action)=>{
+            state.dataOrder.order.userId = action.payload
         }
 
     }
@@ -34,7 +40,9 @@ export const orderSlice = createSlice({
 export const {
     updateOrder,
     updateMethodPayment,
-    updateItemArr
+    updateItemArr,
+    updateTotalPrice,
+    setUserId
 } = orderSlice.actions
 
 export default orderSlice.reducer

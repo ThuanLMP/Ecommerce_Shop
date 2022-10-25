@@ -11,6 +11,7 @@ import { updateStateDialog } from '../../../../store/authSlice';
 import cartApi from '../../../../api/cartApi';
 import { updateCart, updateStateAddItem } from '../../../../store/cartSlice';
 import { toast } from 'react-toastify';
+import { b64DecodeUnicode } from '../../../../utils/ultils';
 
 
 const formatDataCart = (product) => {
@@ -26,7 +27,7 @@ const formatDataCart = (product) => {
     let dataCart = {
         cart: {
             totalPrice: product.price,
-            userId: JSON.parse(localStorage.getItem('user')).id
+            userId: JSON.parse(b64DecodeUnicode(localStorage.getItem('user'))).id
         },
         itemArr: itemArr
     }
@@ -55,7 +56,7 @@ export default function CardProduct({ product }) {
     }
 
     const handleAddItems = () => {
-        if (!localStorage.getItem(accessToken)) {
+        if (!b64DecodeUnicode(localStorage.getItem(accessToken))) {
             const action = updateStateDialog(true)
             dispatch(action)
         } else {

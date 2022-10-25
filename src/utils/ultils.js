@@ -20,3 +20,9 @@ export const b64DecodeUnicode = (str) =>
     );
 
 export const regexPhoneNumber = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+
+export const formatDate = (rawDate) => {
+    const date = new Date(rawDate)
+    const result = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+    return result
+}
