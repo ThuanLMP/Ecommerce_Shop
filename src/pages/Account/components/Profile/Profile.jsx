@@ -32,16 +32,16 @@ export default function Profile({ profile }) {
                             fontWeight: '700',
                             marginTop: '28px'
                         }}
-                        onClick={() => {
-                            setStateEdit(true)
-                        }}
+                            onClick={() => {
+                                setStateEdit(true)
+                            }}
                         >
                             Edit Profile
                         </Button>
                     </div></> :
-                    <>
-                        <EditProfile/>
-                    </>
+
+                    <EditProfile />
+
             }
 
 

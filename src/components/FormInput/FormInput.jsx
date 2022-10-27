@@ -77,6 +77,7 @@ export default function FormInput({ listFeild, typeButton, handleClickClear, ini
 
                     })
                 }
+                
                 <span className={styles.error}>{messErr}</span>
                 <div className={styles.btn}>
                     <LoadingButton

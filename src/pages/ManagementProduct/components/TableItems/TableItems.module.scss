@@ -1,0 +1,29 @@
+.search {
+    width: 100%;
+}
+
+.tableItems {
+    margin-top: 30px;
+}
+
+.wrapValue {
+    display: flex;
+    align-items: center;
+}
+
+.iconsSort {
+    cursor: pointer;
+}
+
+.numberOfList {
+    margin-left: 20px;
+    display: flex;
+    border: solid 1px #929395;
+    width: 55px;
+    height: 25px;
+}
+
+.numberOfList label {
+    margin-left: 7px;
+    margin-top: 3px;
+}

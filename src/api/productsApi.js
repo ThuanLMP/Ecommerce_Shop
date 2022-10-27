@@ -1,4 +1,4 @@
-import { urlApi } from "../config/api"
+import { urlApi } from "../config/api";
 import { b64DecodeUnicode } from "../utils/ultils";
 import axiosClient from "./axiosClient";
 
@@ -7,6 +7,18 @@ const productsApi = {
         const url = `${urlApi}/v1/products/get-all-categories`;
         return axiosClient.get(
             url
+        )
+    },
+    getAllProducts: (page, size) => {
+        const url = `${urlApi}/v1/products`;
+        return axiosClient.get(
+            url,
+            {
+                params: {
+                    page: page,
+                    size: size
+                }
+            }
         )
     },
     getProductsByCategory: (value) => {
@@ -38,6 +50,19 @@ const productsApi = {
             },
             {
                 headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    },
+    uploadImg: (formData) => {
+        const url = `${urlApi}/v1/uploads`;
+        return axiosClient.post(
+            url,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
                     'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
                 }
             }

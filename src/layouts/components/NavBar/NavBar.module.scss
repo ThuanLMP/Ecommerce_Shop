@@ -1,0 +1,91 @@
+.wrapNav {
+    width: 225px;
+    height: 1160px;
+    background-color: #3D464D;
+    position: fixed;
+}
+
+.logoApp {
+    width: 225px;
+    height: 78px;
+    background-color: #FFD333;
+}
+
+.nameApp {
+    font-family: 'Red Rose', cursive;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 32px;
+    position: absolute;
+    left: 10px;
+    top: 27px;
+}
+
+.logoApp div {
+    height: 18px;
+    width: 53px;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Arial';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 32px;
+    right: 28px;
+}
+
+.wrapFeature {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+.wrapFeature p {
+    color: #C4C4C4;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.listFeature ul {
+    list-style-type: none;
+    margin-left: -50px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.listFeature li {
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.listFeature label {
+    margin-left: 10px;
+}
+
+.wrapTitle {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    padding-bottom: 10px;
+}
+
+.wrapTitle label {
+    margin-top: 11px;
+}
+
+.wrapSubFeature div {
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
+
+.wrapSubFeature label {
+    margin-left: 41px;
+}
+.itemAction {
+    background-color: #FFD333;
+}

@@ -1,0 +1,45 @@
+.wrapAppBar {
+    display: flex;
+    height: 78px;
+    width: 100%;
+    background-color: #FFFFFF;
+    position: fixed;
+}
+
+.image img {
+    border-radius: 5px;
+    margin-right: 12px;
+}
+.iconList {
+    display: flex;
+    align-items: center;
+    margin-left: 28px;
+}
+.user {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 12px;
+    left: 1213px;
+}
+.iconNotification {
+    margin-right: 17px;
+    cursor: pointer;
+}
+.name {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #000000;
+}
+.role {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #929395;
+}
+.search {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
