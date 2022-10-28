@@ -40,3 +40,23 @@ export const shippingInfoSchema = Yup.object().shape({
         .matches(regexPhoneNumber,"That doesn't look like a phone number")
         .required('Phone is required'),
 })
+
+export const addProductSchema = Yup.object().shape({
+    name: Yup.string()
+    .min(5, 'Name too short')
+    .max(20, 'Name soo long !')
+    .required('Name required !'),
+    description: Yup.string()
+    .min(10, 'Description is too short')
+    .max(100, 'Description is soo long!')
+    .required('Description is required'),
+    price: Yup.number()
+    .typeError('Price must be number')
+    .min(1, 'Price must to > 0')
+    .required( 'Price is required'),
+    brand: Yup.string()
+    .max(50, 'Brand is soo long'),
+    stockQuantity: Yup.number()
+    .typeError('Stock Quantity must be number')
+    .min(0, 'Stock quantity must to >= 0')
+})

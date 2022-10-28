@@ -5,8 +5,11 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 export default function NavBar() {
+    const navigate = useNavigate()
     return (
         <div className={styles.wrapNav}>
             <div className={styles.logoApp}>
@@ -31,8 +34,23 @@ export default function NavBar() {
                                 <KeyboardArrowDownIcon sx={{ marginLeft: '80px' }} />
                             </div>
                             <div className={styles.wrapSubFeature}>
-                                <div><label>Product List</label></div>
-                                <div><label>Add Product</label></div>
+                                <Box
+                                    onClick={() => {
+                                        navigate('/admin/management/product')
+                                    }}
+                                    sx={{
+                                        cursor: 'pointer'
+                                    }}
+                                ><label>Product List</label>
+                                </Box>
+                                <Box
+                                    onClick={() => {
+                                        navigate('/admin/management/product/add-product')
+                                    }}
+                                    sx={{
+                                        cursor: 'pointer'
+                                    }}
+                                ><label>Add Product</label></Box>
                             </div>
                         </li>
                         <li>
@@ -42,7 +60,9 @@ export default function NavBar() {
                                 <KeyboardArrowDownIcon sx={{ marginLeft: '108px' }} />
                             </div>
                             <div className={styles.wrapSubFeature}>
-                                <div><label>User List</label></div>
+                                <div
+
+                                ><label>User List</label></div>
                                 <div><label>Add User</label></div>
                             </div>
 

@@ -195,14 +195,14 @@ export default function TableItems({ listHeader, listItems, setPage, totalPages,
                                                 <IconButton style={{
                                                     color: '#387B18'
                                                 }}
-                                                    onClick={()=>handleEdit(value)}
+                                                    onClick={() => handleEdit(value)}
                                                 >
                                                     <BorderColorIcon />
                                                 </IconButton>
                                                 <IconButton style={{
                                                     color: '#F02020'
                                                 }}
-                                                    onClick={()=>handleDelete(value)}>
+                                                    onClick={() => handleDelete(value)}>
                                                     <DeleteIcon />
                                                 </IconButton>
                                             </TableCell>

@@ -67,6 +67,66 @@ const productsApi = {
                 }
             }
         )
+    },
+    createProduct: (dataProduct) => {
+        const url = `${urlApi}/v1/products`;
+        return axiosClient.post(
+            url,
+            dataProduct,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    },
+    updateImg: (urlImg, id) => {
+        const url = `${urlApi}/v1/media/${id}`;
+        return axiosClient.patch(
+            url,
+            {
+                url: urlImg
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    },
+    deleteImg: (id) => {
+        const url = `${urlApi}/v1/products/${id}`;
+        return axiosClient.delete(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    },
+    deleteProduct: (id) => {
+        const url = `${urlApi}/v1/products/${id}`;
+        return axiosClient.delete(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
+    },
+    updateProduct: (dataProduct, id) => {
+        const url = `${urlApi}/v1/products/${id}`;
+        return axiosClient.patch(
+            url,
+            dataProduct,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
     }
 }
 

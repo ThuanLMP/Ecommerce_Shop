@@ -1,9 +1,13 @@
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import productsApi from "../../api/productsApi";
 import AdminLayout from "../../layouts/AdminLayout";
+import { updateProduct } from "../../store/managementSlice";
+import ModalConfirmDelete from "./components/ModalConfirmDelete";
 import Navigate from "./components/Navigate";
 import TableItems from "./components/TableItems/TableItems";
 import styles from './ManagementProduct.module.scss'
@@ -13,11 +17,16 @@ const listHeader = [
     'ID', 'Product', 'Brand', 'Category', 'Stock', 'Price', 'Rating'
 ]
 export default function ManagementProduct() {
+    const dispatch = useDispatch()
     const [page, setPage] = useState(0)
     const [size, setSize] = useState(5)
     const navigate = useNavigate()
-
+    const [stateModal, setStateModal] = useState(false)
     const [listProduct, setListProduct] = useState()
+    const [stateDelete, setStateDelete] = useState(false)
+    const setStateModalDelete = (value) => {
+        setStateModal(value)
+    }
     const setPageList = (value) => {
         setPage(value)
     }
@@ -34,13 +43,34 @@ export default function ManagementProduct() {
             }
         }
         getAllProducts()
-    }, [page, size])
+    }, [page, size, stateDelete])
+
+    
     const handleEdit = (value) => {
+        const action = updateProduct(value)
+        dispatch(action)
         navigate(`update-product/${value.id}`)
     }
-    const handleDelete = (value) => {
 
+    const deleteProduct = async (id) => {
+        try {
+            const res = await productsApi.deleteProduct(id)
+            if (res.status === 200) {
+                toast.success(res.data.message)
+                setStateDelete(state => !state)
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error('Delete fail')
+        }
     }
+
+    const handleDelete = (value) => {
+        const action = updateProduct(value)
+        dispatch(action)
+        setStateModal(true)
+    }
+
     return (
         <AdminLayout>
             <Navigate listNav={listNav} />
@@ -80,7 +110,7 @@ export default function ManagementProduct() {
                 }
 
             </div>
-
+            <ModalConfirmDelete stateModal={stateModal} setStateModal={setStateModalDelete} handleDelete={deleteProduct} />
         </AdminLayout>
     )
 }

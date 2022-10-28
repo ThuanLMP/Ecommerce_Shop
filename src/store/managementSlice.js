@@ -16,7 +16,7 @@ export const managementSlice = createSlice({
 })
 
 export const {
-
+    updateProduct
 } = managementSlice.actions
 
 export default managementSlice.reducer
