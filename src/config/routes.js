@@ -5,6 +5,9 @@ import Home from "../pages/Home";
 import ManagementProduct from "../pages/ManagementProduct";
 import AddProduct from "../pages/ManagementProduct/AddProduct";
 import UpdateProduct from "../pages/ManagementProduct/UpdateProduct";
+import ManagementUser from "../pages/ManagementUser";
+import AddUser from "../pages/ManagementUser/AddUser";
+import UpdateUser from "../pages/ManagementUser/UpdateUser";
 
 const routes = [
     {
@@ -41,6 +44,21 @@ const routes = [
         component: <UpdateProduct/>,
         roles: ['admin']
     },
+    {
+        path: '/admin/management/user',
+        component: <ManagementUser />,
+        roles: ['admin']
+    },
+    {
+        path: '/admin/management/user/add-user',
+        component: <AddUser/>,
+        roles: ['admin']
+    },
+    {
+        path: `/admin/management/user/update-user/:id`,
+        component: <UpdateUser/>,
+        roles: ['admin']
+    }
 
 ]
 

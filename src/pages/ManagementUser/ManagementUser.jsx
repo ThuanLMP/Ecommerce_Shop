@@ -1,28 +1,24 @@
-import { Button, Paper } from "@mui/material";
-import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import productsApi from "../../api/productsApi";
-import AdminLayout from "../../layouts/AdminLayout";
-import { updateProduct } from "../../store/managementSlice";
-import ModalConfirmDelete from "./components/ModalConfirmDelete";
-import Navigate from "./components/Navigate";
-import TableItems from "./components/TableItems/TableItems";
-import styles from './ManagementProduct.module.scss'
-const listNav = ['Dashboard', 'Product']
-
-const listHeader = [
-    'ID', 'Product', 'Brand', 'Category', 'Stock', 'Price', 'Rating'
-]
-export default function ManagementProduct() {
+import { Button } from "@mui/material"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import userApi from "../../api/userApi"
+import AdminLayout from "../../layouts/AdminLayout"
+import { updateUser } from "../../store/managementSlice"
+import ModalConfirmDelete from "../ManagementProduct/components/ModalConfirmDelete/ModalConfirmDelete"
+import Navigate from "../ManagementProduct/components/Navigate"
+import TableItems from "../ManagementProduct/components/TableItems/TableItems"
+import styles from './ManagementUser.module.scss'
+const listNav = ['Dashboard', 'User']
+const listHeader = ['ID', 'User', 'Contact', 'Status', 'Verify Email', 'Verify Contact']
+export default function ManagementUser() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [page, setPage] = useState(0)
     const [size, setSize] = useState(5)
-    const navigate = useNavigate()
+    const [listUser, setListUser] = useState()
     const [stateModal, setStateModal] = useState(false)
-    const [listProduct, setListProduct] = useState()
     const [stateDelete, setStateDelete] = useState(false)
     const setStateModalDelete = (value) => {
         setStateModal(value)
@@ -34,39 +30,38 @@ export default function ManagementProduct() {
         setSize(size)
     }
     useEffect(() => {
-        const getAllProducts = async () => {
+        const getAllUsers = async () => {
             try {
-                const response = await productsApi.getAllProducts(page, size)
-                setListProduct(response.data.data)
+                const res = await userApi.getAllUsers(page, size)
+                if (res.status === 200) {
+                    setListUser(res.data.data)
+                }
             } catch (error) {
                 console.log(error)
             }
         }
-        getAllProducts()
-    }, [page, size, stateDelete])
-
+        getAllUsers()
+    }, [page, size,stateDelete])
 
     const handleEdit = (value) => {
-        const action = updateProduct(value)
+        const action = updateUser(value)
         dispatch(action)
-        navigate(`update-product/${value.id}`)
+        navigate(`update-user/${value.id}`)
     }
 
-    const deleteProduct = async (id) => {
+    const deleteUser = async (id) => {
         try {
-            const res = await productsApi.deleteProduct(id)
+            const res = await userApi.deleteUser(id)
             if (res.status === 200) {
                 toast.success(res.data.message)
                 setStateDelete(state => !state)
             }
         } catch (error) {
             console.log(error)
-            toast.error('Delete fail')
         }
     }
-
     const handleDelete = (value) => {
-        const action = updateProduct(value)
+        const action = updateUser(value)
         dispatch(action)
         setStateModal(true)
     }
@@ -74,9 +69,8 @@ export default function ManagementProduct() {
     return (
         <AdminLayout>
             <Navigate listNav={listNav} />
-
             <div className={styles.wrapHeader}>
-                <h2 style={{ marginLeft: '31px' }}>Product</h2>
+                <h2 style={{ marginLeft: '31px' }}>User</h2>
                 <Button
                     sx={{
                         backgroundColor: '#FFD333',
@@ -90,20 +84,20 @@ export default function ManagementProduct() {
                         right: '39px'
                     }}
                     onClick={() => {
-                        navigate('/admin/management/product/add-product')
+                        navigate('/admin/management/user/add-user')
                     }}
-                >New product</Button>
+                >New user</Button>
             </div>
             <div className={styles.wrapList}>
                 {
-                    listProduct === undefined ? <></> :
+                    listUser === undefined ? <></> :
                         <TableItems
-                            type={'product'}
+                            type={'user'}
                             listHeader={listHeader}
-                            listItems={listProduct.result}
+                            listItems={listUser.result}
                             setPage={setPageList}
-                            totalPages={listProduct.totalPages}
                             setSize={setSizeList}
+                            totalPages={listUser.totalPages}
                             size={size}
                             handleEdit={handleEdit}
                             handleDelete={handleDelete}
@@ -111,7 +105,8 @@ export default function ManagementProduct() {
                 }
 
             </div>
-            <ModalConfirmDelete stateModal={stateModal} setStateModal={setStateModalDelete} handleDelete={deleteProduct} />
+
+            <ModalConfirmDelete type={'user'} stateModal={stateModal} setStateModal={setStateModalDelete} handleDelete={deleteUser} />
         </AdminLayout>
     )
-}
+} 

@@ -12,7 +12,253 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
-export default function TableItems({ listHeader, listItems, setPage, totalPages, setSize, size, handleEdit, handleDelete }) {
+export default function TableItems({ type, listHeader, listItems, setPage, totalPages, setSize, size, handleEdit, handleDelete }) {
+    
+    const showList = listItems.map((value, index) => {
+        if (type === 'product') {
+            return (
+                <TableRow>
+                    <TableCell
+                        align='left'
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        {index + 1}
+
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700',
+                            display: 'flex'
+                        }}>
+                        <CardMedia
+                            component="img"
+                            height="200"
+                            style={{ borderRadius: 5 }}
+                            image={value.images[0].url}
+                            alt="No Image"
+                            sx={{
+                                display: 'block',
+                                maxWidth: '60px',
+                                maxHeight: '60px',
+                            }}
+                        />
+                        <Box sx={{
+                            marginLeft: '14px'
+                        }}>
+                            {value.brand} <br />
+                            ID: {value.id}
+                        </Box>
+
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        {value.name}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        {value.category}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        {value.countInStock} items
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        ${value.price}
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        <Rating name="half-rating-read" precision={0.5} value={value.rating} readOnly size='small' />
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '24px',
+                            fontWeight: '700'
+                        }}
+                    >
+                        <IconButton style={{
+                            color: '#387B18'
+                        }}
+                            onClick={() => handleEdit(value)}
+                        >
+                            <BorderColorIcon />
+                        </IconButton>
+                        <IconButton style={{
+                            color: '#F02020'
+                        }}
+                            onClick={() => handleDelete(value)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </TableCell>
+                </TableRow>
+            )
+        }
+        else if (type === 'user') {
+            return (
+                <TableRow>
+                    <TableCell
+                        align='left'
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {index + 1}
+
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400',
+                            display: 'flex',
+                            paddingBottom: '3px'
+                        }}>
+                        <CardMedia
+                            component="img"
+                            height="200"
+                            style={{ borderRadius: 5 }}
+                            image={value.avatar ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png'}
+                            alt="No Image"
+                            sx={{
+                                display: 'block',
+                                maxWidth: '60px',
+                                maxHeight: '60px',
+                            }}
+                        />
+                        <Box sx={{
+                            marginLeft: '14px',
+                            position: 'relative'
+                        }}>
+                            {value.username}
+                            {
+                                value.role === 'admin' ?
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '5px',
+                                            left: '170px',
+                                            width: '50px',
+                                            height: '18px',
+                                            backgroundColor: '#4B9528',
+                                            fontSize: '12px',
+                                            borderRadius: '10px',
+                                            color: 'white',
+                                            paddingLeft: '15px'
+                                        }}
+                                    >
+                                        Admin
+                                    </Box> : <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '5px',
+                                            left: '170px',
+                                            width: '59px',
+                                            height: '18px',
+                                            backgroundColor: '#E13A44',
+                                            fontSize: '12px',
+                                            borderRadius: '10px',
+                                            color: 'white',
+                                            paddingLeft: '5px'
+                                        }}
+                                    >
+                                        Customer
+                                    </Box>
+                            }
+
+                            <br />
+                            {value.email}
+                        </Box>
+
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.contact ?? 'None'}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.isActive === true ? 'Active' : 'Disabled'}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.isEmailVerified === true ? 'Yes' : 'No'}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.isContactVerified === true ? 'Yes' : 'No'}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        <IconButton style={{
+                            color: '#387B18'
+                        }}
+                            onClick={() => handleEdit(value)}
+                        >
+                            <BorderColorIcon />
+                        </IconButton>
+                        <IconButton style={{
+                            color: '#F02020'
+                        }}
+                            onClick={() => handleDelete(value)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </TableCell>
+                </TableRow>
+            )
+        }
+
+    })
+
 
     return (
         <>
@@ -103,113 +349,7 @@ export default function TableItems({ listHeader, listItems, setPage, totalPages,
                         </TableHead>
                         <TableBody>
                             {
-
-                                listItems.map((value, index) => {
-                                    return (
-                                        <TableRow>
-                                            <TableCell
-                                                align='left'
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                {index + 1}
-
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700',
-                                                    display: 'flex'
-                                                }}>
-                                                <CardMedia
-                                                    component="img"
-                                                    height="200"
-                                                    style={{ borderRadius: 5 }}
-                                                    image={value.images[0].url}
-                                                    alt="No Image"
-                                                    sx={{
-                                                        display: 'block',
-                                                        maxWidth: '60px',
-                                                        maxHeight: '60px',
-                                                    }}
-                                                />
-                                                <Box sx={{
-                                                    marginLeft: '14px'
-                                                }}>
-                                                    {value.brand} <br />
-                                                    ID: {value.id}
-                                                </Box>
-
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                {value.name}
-                                            </TableCell>
-
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                {value.category}
-                                            </TableCell>
-
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                {value.countInStock} items
-                                            </TableCell>
-
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                ${value.price}
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                <Rating name="half-rating-read" precision={0.5} value={value.rating} readOnly size='small' />
-                                            </TableCell>
-                                            <TableCell
-                                                style={{
-                                                    fontSize: '24px',
-                                                    fontWeight: '700'
-                                                }}
-                                            >
-                                                <IconButton style={{
-                                                    color: '#387B18'
-                                                }}
-                                                    onClick={() => handleEdit(value)}
-                                                >
-                                                    <BorderColorIcon />
-                                                </IconButton>
-                                                <IconButton style={{
-                                                    color: '#F02020'
-                                                }}
-                                                    onClick={() => handleDelete(value)}>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-
-                                })
+                                showList
                             }
                         </TableBody>
                     </Table>

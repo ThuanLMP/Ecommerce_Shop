@@ -39,7 +39,8 @@ export default function NavBar() {
                                         navigate('/admin/management/product')
                                     }}
                                     sx={{
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
+                                        backgroundColor: 'red'
                                     }}
                                 ><label>Product List</label>
                                 </Box>
@@ -48,9 +49,10 @@ export default function NavBar() {
                                         navigate('/admin/management/product/add-product')
                                     }}
                                     sx={{
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
+                                        paddingLeft: '18%',
                                     }}
-                                ><label>Add Product</label></Box>
+                                >Add Product</Box>
                             </div>
                         </li>
                         <li>
@@ -60,10 +62,26 @@ export default function NavBar() {
                                 <KeyboardArrowDownIcon sx={{ marginLeft: '108px' }} />
                             </div>
                             <div className={styles.wrapSubFeature}>
-                                <div
-
-                                ><label>User List</label></div>
-                                <div><label>Add User</label></div>
+                                <Box
+                                    onClick={() => {
+                                        navigate('/admin/management/user')
+                                    }}
+                                    sx={{
+                                        cursor: 'pointer',
+                                        paddingLeft: '18%',
+                                        backgroundColor: 'blue'
+                                    }}
+                                >User List</Box>
+                                <Box
+                                    onClick={() => {
+                                        navigate('/admin/management/user/add-user')
+                                    }}
+                                    sx={{
+                                        cursor: 'pointer',
+                                        paddingLeft: '18%',
+                                    }}
+                                >
+                                    Add User</Box>
                             </div>
 
 

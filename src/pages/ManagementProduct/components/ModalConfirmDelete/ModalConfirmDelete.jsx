@@ -9,15 +9,20 @@ import { Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 
-export default function ModalConfirmDelete({ stateModal, setStateModal, handleDelete }) {
+export default function ModalConfirmDelete({ type, stateModal, setStateModal, handleDelete }) {
     const product = useSelector(state => state.management.product)
-
+    const user = useSelector(state => state.management.user)
     const handleDisagree = () => {
         setStateModal(false)
     }
     const handleAgree = () => {
-        handleDelete(product.id)
-        setStateModal(false)
+        if (type === 'user') {
+            handleDelete(user.id)
+            setStateModal(false)
+        } else {
+            handleDelete(product.id)
+            setStateModal(false)
+        }
     }
 
     return (
@@ -47,14 +52,25 @@ export default function ModalConfirmDelete({ stateModal, setStateModal, handleDe
                 />
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <Typography
-                            sx={{
-                                fontWeight: '400',
-                                fontSize: '20px',
-                                color: 'black',
-                                marginTop: '-10px'
-                            }}
-                        >Are you sure to delete product #{product.id} ?</Typography>
+                        {type === 'user' ?
+                            <Typography
+                                sx={{
+                                    fontWeight: '400',
+                                    fontSize: '20px',
+                                    color: 'black',
+                                    marginTop: '-10px'
+                                }}
+                            >Are you sure to delete user #{user.id} ?</Typography> :
+                            <Typography
+                                sx={{
+                                    fontWeight: '400',
+                                    fontSize: '20px',
+                                    color: 'black',
+                                    marginTop: '-10px'
+                                }}
+                            >Are you sure to delete product #{product.id} ?</Typography>
+                        }
+
                     </DialogContentText>
 
 
