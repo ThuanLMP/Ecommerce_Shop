@@ -24,6 +24,7 @@ export default function ManagementProduct() {
     const [stateModal, setStateModal] = useState(false)
     const [listProduct, setListProduct] = useState()
     const [stateDelete, setStateDelete] = useState(false)
+
     const setStateModalDelete = (value) => {
         setStateModal(value)
     }
@@ -49,7 +50,7 @@ export default function ManagementProduct() {
     const handleEdit = (value) => {
         const action = updateProduct(value)
         dispatch(action)
-        navigate(`update-product/${value.id}`)
+        navigate(`update-order/${value.id}`)
     }
 
     const deleteProduct = async (id) => {

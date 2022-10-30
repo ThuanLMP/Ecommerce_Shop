@@ -2,6 +2,8 @@ import Account from "../pages/Account";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Home from "../pages/Home";
+import ManagementOrder from "../pages/ManagementOrder";
+import OrderDetail from "../pages/ManagementOrder/OrderDetail";
 import ManagementProduct from "../pages/ManagementProduct";
 import AddProduct from "../pages/ManagementProduct/AddProduct";
 import UpdateProduct from "../pages/ManagementProduct/UpdateProduct";
@@ -57,6 +59,16 @@ const routes = [
     {
         path: `/admin/management/user/update-user/:id`,
         component: <UpdateUser/>,
+        roles: ['admin']
+    },
+    {
+        path: '/admin/management/order',
+        component: <ManagementOrder/>,
+        roles: ['admin']
+    },
+    {
+        path: '/admin/management/order/order-detail/:id',
+        component: <OrderDetail/>,
         roles: ['admin']
     }
 

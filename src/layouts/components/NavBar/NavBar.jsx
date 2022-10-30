@@ -87,7 +87,9 @@ export default function NavBar() {
 
                         </li>
                         <li>
-                            <div className={styles.wrapTitle}>
+                            <div className={styles.wrapTitle} onClick={()=>{
+                                navigate('/admin/management/order')
+                            }}>
                                 <ShoppingCartIcon sx={{ marginTop: '11px' }} />
                                 <label>Orders</label>
                             </div>

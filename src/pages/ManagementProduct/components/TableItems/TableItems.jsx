@@ -4,16 +4,17 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box } from "@mui/system";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { CardMedia, Pagination, Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { CardMedia, Pagination, Paper, Rating, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { formatDate } from '../../../../utils/ultils';
 
 
 
 
 export default function TableItems({ type, listHeader, listItems, setPage, totalPages, setSize, size, handleEdit, handleDelete }) {
-    
+
     const showList = listItems.map((value, index) => {
         if (type === 'product') {
             return (
@@ -255,6 +256,126 @@ export default function TableItems({ type, listHeader, listItems, setPage, total
                     </TableCell>
                 </TableRow>
             )
+        } else if (type === 'order') {
+            return (
+                <TableRow>
+                    <TableCell
+                        align='left'
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {index + 1}
+
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.userId}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.totalPrice}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.address}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.contact}
+                    </TableCell>
+
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {formatDate(value.createdAt)}
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.isPaid === true ? <Box sx={{
+                            width: '72px',
+                            height: '25px',
+                            backgroundColor: '#FFD333',
+                            borderRadius: '20px',
+                            display: 'flex',
+                            justifyContent: 'center',
+
+                        }}> <Typography sx={{
+                            fontSize: '20px',
+                            color: 'white',
+                            fontWeight: '400'
+                        }}>Yes</Typography> </Box> : <Box sx={{
+                            width: '72px',
+                            height: '25px',
+                            backgroundColor: '#366AB8',
+                            borderRadius: '20px',
+                            display: 'flex',
+                            justifyContent: 'center',
+
+                        }}><Typography sx={{
+                            fontSize: '20px',
+                            color: 'white',
+                            fontWeight: '400'
+                        }}>No</Typography> </Box>}
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        {value.status}
+                    </TableCell>
+                    <TableCell
+                        style={{
+                            fontSize: '20px',
+                            fontWeight: '400'
+                        }}
+                    >
+                        <IconButton style={{
+                            color: '#387B18'
+                        }}
+                            onClick={() => handleEdit(value)}
+                        >
+                            <BorderColorIcon />
+                        </IconButton>
+                        <IconButton style={{
+                            color: '#F02020'
+                        }}
+                            onClick={() => handleDelete(value)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </TableCell>
+                </TableRow>
+            )
         }
 
     })
@@ -349,14 +470,15 @@ export default function TableItems({ type, listHeader, listItems, setPage, total
                         </TableHead>
                         <TableBody>
                             {
-                                showList
+                                listItems === undefined ? <></> : showList
                             }
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <Box sx={{
                     display: 'flex',
-                    position: 'relative'
+                    position: 'relative',
+                    marginBottom: '30px'
                 }}>
                     <Pagination
                         count={totalPages}

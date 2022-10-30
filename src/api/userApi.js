@@ -75,6 +75,17 @@ const userApi = {
                 }
             }
         )
+    },
+    getUserById: (id) => {
+        const url = `${urlApi}/v1/users/${id}`;
+        return axiosClient.get(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${b64DecodeUnicode(localStorage.getItem('ACCESS_TOKEN_SHOP'))}`
+                }
+            }
+        )
     }
 
 }
